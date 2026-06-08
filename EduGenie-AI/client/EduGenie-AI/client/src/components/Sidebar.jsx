@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Home, Sparkles, FileText, ClipboardList, MapPin, Monitor, Settings, LogOut } from 'lucide-react';
 
 const navItems = [
-  { label: 'Dashboard', icon: Home, active: true },
-  { label: 'AI Tutor', icon: Sparkles },
-  { label: 'PDF Analyzer', icon: FileText },
-  { label: 'Quiz Engine', icon: ClipboardList },
-  { label: 'Career Roadmaps', icon: MapPin },
-  { label: 'Mock Interview', icon: Monitor },
-  { label: 'Settings', icon: Settings },
+  { label: 'Dashboard', icon: Home, path: '/dashboard' },
+  { label: 'AI Tutor', icon: Sparkles, path: '/ai-tutor' },
+  { label: 'PDF Analyzer', icon: FileText, path: '/pdf-analyzer' },
+  { label: 'Quiz Engine', icon: ClipboardList, path: '/quiz-engine' },
+  { label: 'Career Roadmaps', icon: MapPin, path: '/career-roadmap' },
+  { label: 'Mock Interview', icon: Monitor, path: '/mock-interview' },
+  { label: 'Settings', icon: Settings, path: '/settings' },
 ];
 
 export default function Sidebar({ open, onClose, onLogout }) {
@@ -53,17 +54,21 @@ export default function Sidebar({ open, onClose, onLogout }) {
       </div>
 
       <nav className="mt-10 flex flex-col gap-2">
-        {navItems.map(({ label, icon: Icon, active }) => (
-          <button
+        {navItems.map(({ label, icon: Icon, path }) => (
+          <NavLink
             key={label}
-            type="button"
-            className={`flex items-center gap-3 rounded-3xl px-4 py-3 text-left text-sm font-medium transition ${
-              active ? 'bg-slate-900/70 text-cyan-300 shadow-[0_20px_50px_rgba(14,116,144,0.12)]' : 'text-slate-300 hover:bg-white/5 hover:text-slate-100'
-            }`}
+            to={path}
+            end={path === '/dashboard'}
+            onClick={onClose}
+            className={({ isActive }) =>
+              `flex items-center gap-3 rounded-3xl px-4 py-3 text-left text-sm font-medium transition ${
+                isActive ? 'bg-slate-900/70 text-cyan-300 shadow-[0_20px_50px_rgba(14,116,144,0.12)]' : 'text-slate-300 hover:bg-white/5 hover:text-slate-100'
+              }`
+            }
           >
             <Icon className="h-4 w-4" />
             {label}
-          </button>
+          </NavLink>
         ))}
       </nav>
 

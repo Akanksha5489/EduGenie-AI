@@ -2,8 +2,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Bell, Settings } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Sidebar from '../components/Sidebar.jsx';
+import { useNavigate, useLocation, useOutletContext } from 'react-router-dom';
 import DashboardCards from '../components/DashboardCards.jsx';
 
 const recentActivity = [
@@ -105,7 +104,7 @@ function Dashboard() {
   const location = useLocation();
   const activeModule = new URLSearchParams(location.search).get('module') || 'ai-tutor';
   const selectedModule = moduleInfo[activeModule] || moduleInfo['ai-tutor'];
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { onOpenSidebar } = useOutletContext();
   const [firstName, setFirstName] = useState('Learner');
 
   useEffect(() => {
@@ -126,10 +125,6 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="flex h-screen">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} onLogout={handleLogout} />
-
         <main className="flex-1 flex flex-col overflow-hidden">
           <header className="sticky top-0 z-20 border-b border-white/10 bg-slate-950/95 px-4 py-3 backdrop-blur-lg md:px-6">
             <div className="flex items-center justify-between gap-4">
@@ -167,7 +162,12 @@ function Dashboard() {
                   {firstName.charAt(0).toUpperCase()}
                 </button>
 
-                <button className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 hover:text-white md:hidden">
+                <button
+                  type="button"
+                  onClick={onOpenSidebar}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 hover:text-white md:hidden"
+                  aria-label="Open navigation"
+                >
                   <Settings className="h-4 w-4" />
                 </button>
               </div>
@@ -380,8 +380,6 @@ function Dashboard() {
             </div>
           </div>
         </main>
-      </div>
-    </div>
   );
 }
 
