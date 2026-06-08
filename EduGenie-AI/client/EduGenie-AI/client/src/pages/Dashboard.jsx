@@ -313,54 +313,29 @@ function Dashboard() {
                   <div className="rounded-3xl border border-white/10 bg-slate-950/65 p-5">
                     <div className="flex items-center justify-between gap-4">
                       <div>
-                        <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Course completion</p>
-                        <h4 className="mt-2 text-lg font-semibold text-white">Progress by course</h4>
-                      </div>
-                      <span className="text-xs text-slate-400">4 active courses</span>
-                    </div>
-
-                    <div className="mt-5 space-y-4">
-                      {courseProgress.map((item) => (
-                        <div key={item.course}>
-                          <div className="flex items-center justify-between gap-3">
-                            <p className="text-sm text-slate-200">{item.course}</p>
-                            <p className="text-sm font-semibold text-white">{item.percent}%</p>
-                          </div>
-                          <div className="mt-2 h-2 rounded-full bg-white/10">
-                            <div
-                              className="h-full rounded-full bg-cyan-400"
-                              style={{ width: `${item.percent}%` }}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="rounded-3xl border border-white/10 bg-slate-950/65 p-5">
-                    <div className="flex items-center justify-between gap-4">
-                      <div>
                         <p className="text-xs uppercase tracking-[0.35em] text-slate-500">Weekly study hours</p>
                         <h4 className="mt-2 text-lg font-semibold text-white">Hours studied per day</h4>
                       </div>
                       <span className="text-xs text-slate-400">Total: 16.7 hrs</span>
                     </div>
 
-                    <div className="mt-5 grid gap-3 sm:grid-cols-7">
+                    <div className="mt-6 grid gap-4 sm:grid-cols-7">
                       {weeklyStudyHours.map((item) => {
-                        const height = `${Math.max(10, item.hours * 20)}px`;
+                        const height = `${Math.max(20, item.hours * 30)}px`;
                         return (
-                          <div key={item.day} className="flex flex-col items-center gap-2 text-center">
-                            <div className="flex h-[110px] w-full items-end">
-                              <div className="mx-auto w-3 rounded-full bg-cyan-400" style={{ height }} />
+                          <div key={item.day} className="flex flex-col items-center gap-3 text-center">
+                            <div className="flex h-[160px] w-full items-end justify-center">
+                              <div className="w-4 rounded-lg bg-gradient-to-t from-cyan-400 to-cyan-300 shadow-lg shadow-cyan-400/30 transition hover:shadow-xl hover:shadow-cyan-400/50" style={{ height }} />
                             </div>
-                            <p className="text-sm font-semibold text-white">{item.hours}</p>
-                            <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500">{item.day}</span>
+                            <div className="flex flex-col gap-1">
+                              <p className="text-sm font-bold text-white">{item.hours}h</p>
+                              <span className="text-xs uppercase tracking-[0.25em] text-slate-400">{item.day}</span>
+                            </div>
                           </div>
                         );
                       })}
                     </div>
-                    <p className="mt-4 text-xs text-slate-400">Study time is rising across the week — great consistency.</p>
+                    <p className="mt-6 text-sm leading-6 text-slate-400">Study time is rising across the week — great consistency. Friday's peak shows dedication to your learning goals.</p>
                   </div>
                 </motion.div>
 
