@@ -9,6 +9,7 @@ const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 const protectedRoutes = require("./routes/protectedRoutes");
+const aiRoutes = require("./routes/aiRoutes");
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.use((req, res, next) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+
+app.use("/api/ai", aiRoutes);
 
 app.use("/api", protectedRoutes);
 

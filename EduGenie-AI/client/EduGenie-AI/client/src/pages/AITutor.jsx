@@ -6,20 +6,57 @@ export default function AITutor() {
   const [messages, setMessages] = useState([
     { id: 1, role: 'bot', text: "Hi! I'm your AI Tutor. What would you like to learn today?" },
   ]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSend = (text) => {
+  const handleSend = async (text) => {
+    if (isLoading) return;
+
     const userMsg = { id: Date.now() + Math.random(), role: 'user', text };
-    setMessages((m) => [...m, userMsg]);
+    const thinkingId = Date.now() + Math.random() + 1;
+    const thinkingMsg = { id: thinkingId, role: 'bot', text: 'AI Tutor is thinking...' };
 
-    // Local simulated AI response (placeholder)
-    const botReply = {
-      id: Date.now() + Math.random() + 1,
-      role: 'bot',
-      text: `Thanks — I heard: "${text}". This is a simulated response to demonstrate the chat UI.`,
-    };
+    setMessages((current) => [...current, userMsg, thinkingMsg]);
+    setIsLoading(true);
 
-    // Add small delay to simulate thinking
-    setTimeout(() => setMessages((m) => [...m, botReply]), 700);
+    try {
+      const response = await fetch('http://localhost:5000/api/ai/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: text }),
+      });
+
+      if (!response.ok) {
+        throw new Error('API response error');
+      }
+
+      const data = await response.json();
+      const replyText = data?.reply?.trim();
+
+      if (!replyText) {
+        throw new Error('Invalid AI response');
+      }
+
+      setMessages((current) =>
+        current.map((msg) =>
+          msg.id === thinkingId ? { ...msg, text: replyText } : msg
+        )
+      );
+    } catch (error) {
+      setMessages((current) =>
+        current.map((msg) =>
+          msg.id === thinkingId
+            ? {
+                ...msg,
+                text: "Sorry, I couldn't get a response right now. Please try again.",
+              }
+            : msg
+        )
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -35,7 +72,7 @@ export default function AITutor() {
       <main className="flex-1 overflow-hidden">
         <div className="mx-auto flex h-full max-w-6xl flex-col">
           <AITutorChat messages={messages} />
-          <ChatInput onSend={handleSend} />
+          <ChatInput onSend={handleSend} disabled={isLoading} />
         </div>
       </main>
     </div>

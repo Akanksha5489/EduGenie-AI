@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-export default function ChatInput({ onSend }) {
+export default function ChatInput({ onSend, disabled }) {
   const [text, setText] = useState('');
 
   const handleSend = () => {
+    if (disabled) return;
     const trimmed = text.trim();
     if (!trimmed) return;
     onSend(trimmed);
@@ -11,6 +12,7 @@ export default function ChatInput({ onSend }) {
   };
 
   const handleKeyDown = (e) => {
+    if (disabled) return;
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -25,11 +27,14 @@ export default function ChatInput({ onSend }) {
           onChange={(e) => setText(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type your question, e.g. 'Explain backpropagation in simple terms'"
-          className="resize-none h-12 flex-1 rounded-xl bg-slate-800/70 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-cyan-400/30"
+          disabled={disabled}
+          className="resize-none h-12 flex-1 rounded-xl bg-slate-800/70 px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 outline-none focus:ring-2 focus:ring-cyan-400/30 disabled:cursor-not-allowed disabled:opacity-70"
         />
         <button
+          type="button"
           onClick={handleSend}
-          className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-300"
+          disabled={disabled}
+          className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-4 py-3 text-sm font-semibold text-slate-950 hover:bg-cyan-300 disabled:cursor-not-allowed disabled:opacity-70"
         >
           Send
         </button>
