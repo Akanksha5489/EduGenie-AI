@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 const studentProfile = {
-  name: 'Student Learner',
+  name: 'Student',
   email: 'student@example.com',
   initials: 'SL',
 };
 
 const accountInfo = [
   { label: 'Member Since', value: 'May 2026' },
-  { label: 'Current Plan', value: 'Growth Plan' },
+  { label: 'Current Plan', value: 'Free Plan' },
   { label: 'Last Login', value: 'Today' },
 ];
 
@@ -16,7 +16,26 @@ const colorOptions = ['Blue', 'Purple', 'Green'];
 const responseOptions = ['Short', 'Medium', 'Detailed'];
 const levelOptions = ['Beginner', 'Intermediate', 'Advanced'];
 
+function getSavedUser() {
+  try {
+    return JSON.parse(localStorage.getItem('user') || '{}');
+  } catch {
+    return {};
+  }
+}
+
 export default function Settings() {
+  const savedUser = getSavedUser();
+  const displayName = savedUser?.name?.trim() || studentProfile.name;
+  const displayEmail = savedUser?.email?.trim() || studentProfile.email;
+  const initials = displayName
+    .split(' ')
+    .filter(Boolean)
+    .map((part) => part.charAt(0))
+    .join('')
+    .slice(0, 2)
+    .toUpperCase() || studentProfile.initials;
+
   const [theme, setTheme] = useState('Dark Mode');
   const [themeColor, setThemeColor] = useState('Blue');
   const [responseLength, setResponseLength] = useState('Medium');
@@ -50,11 +69,11 @@ export default function Settings() {
             <p className="text-xs uppercase tracking-[0.35em] text-slate-400">Profile settings</p>
             <div className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center">
               <div className="flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-cyan-400 to-blue-500 text-2xl font-semibold text-slate-950 shadow-lg shadow-cyan-500/20">
-                {studentProfile.initials}
+                {initials}
               </div>
               <div>
-                <h2 className="text-2xl font-semibold text-white">{studentProfile.name}</h2>
-                <p className="mt-2 text-sm text-slate-400">{studentProfile.email}</p>
+                <h2 className="text-2xl font-semibold text-white">{displayName}</h2>
+                <p className="mt-2 text-sm text-slate-400">{displayEmail}</p>
                 <span className="mt-4 inline-flex rounded-full bg-cyan-400/15 px-3 py-1 text-xs font-semibold text-cyan-200">
                   Student profile
                 </span>

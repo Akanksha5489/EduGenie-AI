@@ -14,9 +14,14 @@ export default function ProtectedLayout() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
-      <div className="flex h-screen">
-        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} onLogout={handleLogout} />
-        <main className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex min-h-screen">
+        <Sidebar
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          onLogout={handleLogout}
+        />
+
+        <main className="flex-1 overflow-y-auto">
           <Outlet context={{ onOpenSidebar: () => setSidebarOpen(true) }} />
         </main>
       </div>
