@@ -9,6 +9,7 @@ import QuizEngine from './pages/QuizEngine.jsx';
 import CareerRoadmap from './pages/CareerRoadmap.jsx';
 import MockInterview from './pages/MockInterview.jsx';
 import Settings from './pages/Settings.jsx';
+import LearningHub from './pages/LearningHub.jsx';
 import ProtectedLayout from './components/ProtectedLayout.jsx';
 
 function RequireAuth({ children }) {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/quiz-engine" element={<QuizEngine />} />
           <Route path="/career-roadmap" element={<CareerRoadmap />} />
           <Route path="/mock-interview" element={<MockInterview />} />
+          <Route path="/learning-hub" element={<LearningHub />} />
           <Route path="/settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" replace />} />

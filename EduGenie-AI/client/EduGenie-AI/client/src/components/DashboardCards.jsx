@@ -42,7 +42,7 @@ export default function DashboardCards() {
         <motion.button
           key={title}
           type="button"
-          onClick={() => navigate(`/dashboard?module=${slug}`)}
+          onClick={() => navigate(`/${slug}`)}
           whileHover={{ y: -3 }}
           transition={{ duration: 0.25 }}
           className="group rounded-[28px] border border-white/10 bg-slate-900/70 p-5 text-left transition hover:border-white/20 hover:bg-slate-900/90 hover:shadow-lg hover:shadow-slate-950/40"

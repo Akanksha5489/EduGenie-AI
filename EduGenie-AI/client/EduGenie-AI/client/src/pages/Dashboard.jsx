@@ -209,10 +209,18 @@ function Dashboard() {
                   </div>
 
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <button className="inline-flex min-w-[170px] items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300">
+                    <button
+                      type="button"
+                      onClick={() => navigate('/learning-hub')}
+                      className="inline-flex min-w-[170px] items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+                    >
                       Continue Learning
                     </button>
-                    <button className="inline-flex min-w-[170px] items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+                    <button
+                      type="button"
+                      onClick={() => navigate('/ai-tutor')}
+                      className="inline-flex min-w-[170px] items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+                    >
                       Open AI Tutor
                     </button>
                   </div>
